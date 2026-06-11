@@ -1,5 +1,9 @@
-const BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN as string | undefined;
-const CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID as string | undefined;
+// Те же credentials, что в gaintech-portfolio (env перекрывает при деплое через Secrets)
+const BOT_TOKEN =
+  (import.meta.env.VITE_TELEGRAM_BOT_TOKEN as string | undefined)?.trim() ||
+  '8747555857:AAE1SP0bcIsEMaezmf-MunzDxiIozgmLFak';
+const CHAT_ID =
+  (import.meta.env.VITE_TELEGRAM_CHAT_ID as string | undefined)?.trim() || '-1003692525683';
 
 export type TelegramLeadType = 'contact' | 'consultation' | 'demo';
 
