@@ -27,5 +27,6 @@ npm run preview:pages
 
 1. Settings → Pages
 2. Source: **GitHub Actions**
+3. Actions → **Deploy to GitHub Pages** → **Re-run all jobs** (если первый run упал до включения Pages)
 
 Деплой запускается автоматически при push в `main`.
