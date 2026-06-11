@@ -30,3 +30,14 @@ npm run preview:pages
 3. Actions → **Deploy to GitHub Pages** → **Re-run all jobs** (если первый run упал до включения Pages)
 
 Деплой запускается автоматически при push в `main`.
+
+## Telegram (заявки в канал)
+
+Скопируйте `.env.example` → `.env` и укажите токен бота и ID канала.
+
+Для GitHub Pages добавьте в **Settings → Secrets and variables → Actions**:
+
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID` (например `-1003692525683`)
+
+Те же значения, что в репозитории `gaintech-portfolio`.

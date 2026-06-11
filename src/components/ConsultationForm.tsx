@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { X, Send, CheckCircle2 } from 'lucide-react';
+import { X, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { isTelegramConfigured, sendTelegramLead } from '../lib/telegram';
 
 interface ConsultationFormProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface ConsultationFormProps {
 export default function ConsultationForm({ isOpen, onClose }: ConsultationFormProps) {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', center: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -21,14 +24,36 @@ export default function ConsultationForm({ isOpen, onClose }: ConsultationFormPr
     onClose();
     setTimeout(() => {
       setSubmitted(false);
+      setError('');
       setFormData({ name: '', phone: '', email: '', center: '' });
     }, 300);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(handleClose, 2500);
+    setError('');
+
+    if (!isTelegramConfigured()) {
+      setError('Отправка временно недоступна. Напишите нам в Telegram.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await sendTelegramLead('consultation', {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        center: formData.center.trim(),
+        message: 'Заявка на консультацию с лендинга',
+      });
+      setSubmitted(true);
+      setTimeout(handleClose, 2500);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Не удалось отправить. Попробуйте позже.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,12 +93,20 @@ export default function ConsultationForm({ isOpen, onClose }: ConsultationFormPr
                       value={formData[f.key as keyof typeof formData]}
                       onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-finance/50"
+                      disabled={loading}
                     />
                   </div>
                 ))}
 
-                <button type="submit" className="btn-primary w-full">
-                  Отправить <Send size={16} />
+                {error && (
+                  <p className="flex items-center gap-2 text-xs text-red-400">
+                    <AlertCircle size={14} />
+                    {error}
+                  </p>
+                )}
+
+                <button type="submit" className="btn-primary w-full disabled:opacity-60" disabled={loading}>
+                  {loading ? 'Отправляем...' : 'Отправить'} {!loading && <Send size={16} />}
                 </button>
               </form>
             </>

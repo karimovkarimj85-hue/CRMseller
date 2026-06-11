@@ -1,23 +1,43 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Send, Mail, MessageCircle, Instagram, MapPin, Clock, CheckCircle2 } from 'lucide-react';
+import { Phone, Send, Mail, MessageCircle, Instagram, MapPin, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import AnimateIn from '../components/AnimateIn';
 import { contactConfig } from '../config';
 import { fadeUp, staggerFast, scaleIn, cardHover } from '../lib/motion';
+import { isTelegramConfigured, sendTelegramLead } from '../lib/telegram';
 
 const icons = { phone: Phone, telegram: MessageCircle, email: Mail, instagram: Instagram };
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
+    setError('');
+
+    if (!isTelegramConfigured()) {
+      setError('Отправка временно недоступна. Напишите нам в Telegram.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await sendTelegramLead('contact', {
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        message: form.message.trim(),
+      });
+      setSent(true);
       setForm({ name: '', phone: '', message: '' });
-    }, 3000);
+      setTimeout(() => setSent(false), 4000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Не удалось отправить. Попробуйте позже.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,6 +146,7 @@ export default function Contact() {
                             value={form[field.key as keyof typeof form]}
                             onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                             placeholder={field.placeholder}
+                            disabled={loading}
                           />
                         </motion.div>
                       ))}
@@ -143,15 +164,25 @@ export default function Contact() {
                           value={form.message}
                           onChange={(e) => setForm({ ...form, message: e.target.value })}
                           placeholder="Ваш вопрос..."
+                          disabled={loading}
                         />
                       </motion.div>
+
+                      {error && (
+                        <p className="flex items-center gap-2 text-xs text-red-400">
+                          <AlertCircle size={14} />
+                          {error}
+                        </p>
+                      )}
+
                       <motion.button
                         type="submit"
-                        className="btn-crm w-full"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        className="btn-crm w-full disabled:opacity-60"
+                        whileHover={loading ? undefined : { scale: 1.02 }}
+                        whileTap={loading ? undefined : { scale: 0.98 }}
+                        disabled={loading}
                       >
-                        Отправить <Send size={14} />
+                        {loading ? 'Отправляем...' : 'Отправить'} {!loading && <Send size={14} />}
                       </motion.button>
                     </motion.form>
                   )}
