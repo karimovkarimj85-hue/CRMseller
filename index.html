@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <script>
+      (function () {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        if (location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+        window.scrollTo(0, 0);
+
+        var t = localStorage.getItem('gain-theme');
+        var dark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GainTech — CRM для учебных центров</title>
+    <meta name="description" content="GainTech — комплексная CRM для учебных центров. Финансы, персонал, ученики, расписание и аналитика в одной платформе." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

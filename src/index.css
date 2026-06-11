@@ -1,0 +1,517 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg: #f4f4f5;
+    --bg-elevated: #ffffff;
+    --surface: rgba(255, 255, 255, 0.72);
+    --text: #0a0a0a;
+    --text-muted: rgba(10, 10, 10, 0.55);
+    --text-faint: rgba(10, 10, 10, 0.35);
+    --border: rgba(10, 10, 10, 0.12);
+    --border-strong: rgba(10, 10, 10, 0.22);
+    --btn-primary-bg: #0a0a0a;
+    --btn-primary-text: #ffffff;
+    --btn-outline-bg: rgba(255, 255, 255, 0.5);
+    --screenshot-bg: #e8e8e8;
+    --shadow-premium: 0 24px 64px -24px rgba(0, 0, 0, 0.18);
+    --shadow-glow: 0 32px 80px -32px rgba(0, 0, 0, 0.12);
+    --parallax-orb: rgba(0, 0, 0, 0.09);
+    --parallax-orb-accent: rgba(0, 0, 0, 0.05);
+    --parallax-line: rgba(0, 0, 0, 0.1);
+    --grid-line: rgba(0, 0, 0, 0.06);
+    --parallax-vignette: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 0, 0, 0.04), transparent 70%);
+    --apple-spotlight-core: rgba(0, 0, 0, 0.09);
+    --apple-spotlight-mid: rgba(0, 0, 0, 0.04);
+  }
+
+  .dark {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --bg-elevated: #111111;
+    --surface: rgba(10, 10, 10, 0.72);
+    --text: #fafafa;
+    --text-muted: rgba(255, 255, 255, 0.55);
+    --text-faint: rgba(255, 255, 255, 0.32);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.2);
+    --btn-primary-bg: #ffffff;
+    --btn-primary-text: #0a0a0a;
+    --btn-outline-bg: rgba(255, 255, 255, 0.04);
+    --screenshot-bg: #080808;
+    --shadow-premium: 0 24px 80px -20px rgba(0, 0, 0, 0.65);
+    --shadow-glow: 0 32px 80px -24px rgba(0, 0, 0, 0.55);
+    --parallax-orb: rgba(255, 255, 255, 0.06);
+    --parallax-orb-accent: rgba(255, 255, 255, 0.03);
+    --parallax-line: rgba(255, 255, 255, 0.09);
+    --grid-line: rgba(255, 255, 255, 0.045);
+    --parallax-vignette: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 70%);
+    --apple-spotlight-core: rgba(255, 255, 255, 0.14);
+    --apple-spotlight-mid: rgba(255, 255, 255, 0.05);
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  body {
+    @apply min-h-screen font-sans antialiased;
+    background-color: var(--bg);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  .text-primary {
+    color: var(--text);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .text-faint {
+    color: var(--text-faint);
+  }
+
+  .border-theme {
+    border-color: var(--border);
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .bg-surface-elevated {
+    background-color: var(--bg-elevated);
+  }
+
+  .container-main {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+  }
+
+  .section-pad {
+    @apply py-12 sm:py-16;
+  }
+
+  .section-label {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em];
+    border: 1px solid var(--border);
+    background: var(--btn-outline-bg);
+    color: var(--text-muted);
+  }
+
+  .section-title {
+    @apply text-2xl font-bold tracking-tight sm:text-3xl lg:text-[2.65rem] lg:leading-[1.12];
+    color: var(--text);
+  }
+
+  .text-gradient-hero {
+    background: linear-gradient(135deg, var(--text) 0%, rgba(128, 128, 128, 0.85) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .section-desc {
+    @apply mt-4 max-w-xl text-sm leading-relaxed;
+    color: var(--text-muted);
+  }
+
+  .glass {
+    @apply rounded-glass shadow-glass-sm backdrop-blur-2xl;
+    border: 1px solid var(--border);
+    background: var(--btn-outline-bg);
+  }
+
+  .glass-lg {
+    @apply rounded-glass-lg shadow-glass backdrop-blur-3xl;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .glass-inner {
+    @apply rounded-glass backdrop-blur-xl;
+    border: 1px solid var(--border);
+    background: var(--btn-outline-bg);
+  }
+
+  .crm-input {
+    @apply w-full rounded-glass px-4 py-3 text-sm outline-none backdrop-blur-xl transition;
+    border: 1px solid var(--border);
+    background: var(--btn-outline-bg);
+    color: var(--text);
+  }
+
+  .crm-input::placeholder {
+    color: var(--text-faint);
+  }
+
+  .crm-input:focus {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated);
+  }
+
+  .btn-crm {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition active:scale-[0.98];
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-crm:hover {
+    opacity: 0.92;
+  }
+
+  .btn-crm-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold backdrop-blur-xl transition;
+    border: 1px solid var(--border-strong);
+    background: var(--btn-outline-bg);
+    color: var(--text);
+  }
+
+  .btn-crm-outline:hover {
+    border-color: var(--text-muted);
+    background: var(--bg-elevated);
+  }
+
+  .num-up,
+  .num-down,
+  .num-base {
+    @apply font-mono font-semibold;
+    color: var(--text);
+  }
+
+  .stat-value {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+
+  .screenshot-stage {
+    @apply relative rounded-[22px] p-[1px];
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(128, 128, 128, 0.15) 40%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    box-shadow: var(--shadow-premium), var(--shadow-glow);
+  }
+
+  .dark .screenshot-stage {
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.06) 45%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+  }
+
+  .screenshot-stage--neutral {
+    background: linear-gradient(
+      155deg,
+      rgba(128, 128, 128, 0.2) 0%,
+      rgba(128, 128, 128, 0.06) 100%
+    );
+  }
+
+  .screenshot-stage__shine {
+    @apply pointer-events-none absolute inset-x-8 top-0 z-10 h-px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35) 50%, transparent);
+  }
+
+  .screenshot-stage__inner {
+    @apply overflow-hidden rounded-[21px];
+    background: var(--screenshot-bg);
+  }
+
+  .screenshot-stage--clean {
+    padding: 0;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: var(--screenshot-bg);
+    box-shadow: var(--shadow-premium);
+  }
+
+  .screenshot-stage--clean .screenshot-stage__inner {
+    border-radius: 17px;
+    background: transparent;
+    line-height: 0;
+  }
+
+  .story-shot-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(72vh, 820px);
+  }
+
+  .story-shot-img--side {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(62vh, 760px);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 5%,
+      #000 95%,
+      transparent 100%
+    );
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  .story-scroll-visual {
+    isolation: isolate;
+  }
+
+  .story-scroll-glow {
+    background: radial-gradient(
+      ellipse at center,
+      var(--apple-spotlight-core) 0%,
+      var(--apple-spotlight-mid) 42%,
+      transparent 72%
+    );
+    filter: blur(48px);
+    opacity: 0.9;
+  }
+
+  .story-scroll-pair {
+    align-items: start;
+  }
+
+  .story-scroll-copy {
+    padding-top: 0;
+  }
+
+  .story-scroll-stack {
+    position: relative;
+    width: 100%;
+    padding: clamp(8px, 1.5vh, 16px) 0;
+  }
+
+  .story-scroll-stack__masked {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: 100%;
+  }
+
+  .story-scroll-edge-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    background: linear-gradient(
+      to bottom,
+      var(--bg) 0%,
+      transparent 7%,
+      transparent 93%,
+      var(--bg) 100%
+    );
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .story-scroll-layer {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .story-scroll-layer__motion {
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    will-change: transform;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .story-shot-img--side {
+      max-height: min(68vh, 840px);
+    }
+  }
+
+  .screenshot-stage__perspective {
+    transform: perspective(1400px) rotateX(2deg) rotateY(-1deg);
+    transform-origin: center top;
+  }
+
+  .apple-sticky-stage {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    padding-top: clamp(4.5rem, 10vh, 6.5rem);
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .apple-parallax-3d {
+    transform-style: preserve-3d;
+    transform-origin: center center;
+  }
+
+  .apple-display-title {
+    @apply text-4xl font-bold sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05];
+    color: var(--text);
+  }
+
+  .apple-spotlight {
+    border-radius: 9999px;
+    background: radial-gradient(
+      ellipse at center,
+      var(--apple-spotlight-core) 0%,
+      var(--apple-spotlight-mid) 38%,
+      transparent 72%
+    );
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  .apple-progress-rail {
+    display: flex;
+    gap: 0.35rem;
+    width: min(280px, 70vw);
+  }
+
+  .apple-progress-dot {
+    flex: 1;
+    height: 3px;
+    border-radius: 9999px;
+    background: var(--text);
+    transform-origin: left center;
+  }
+
+  .apple-product-tile {
+    @apply rounded-glass-lg transition duration-500 ease-out;
+    border: 1px solid var(--border);
+    background: var(--btn-outline-bg);
+    box-shadow: var(--shadow-premium);
+  }
+
+  .apple-product-tile:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-elevated);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .nav-floating {
+    @apply rounded-2xl backdrop-blur-2xl;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-premium);
+  }
+
+  .parallax-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 80% 55% at 50% 15%, black 15%, transparent 70%);
+  }
+
+  .parallax-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+  }
+
+  .parallax-orb--light {
+    background: radial-gradient(circle at 30% 30%, var(--parallax-orb) 0%, transparent 68%);
+    opacity: 0.95;
+  }
+
+  .parallax-orb--light.parallax-orb--b {
+    background: radial-gradient(circle at 70% 40%, var(--parallax-orb-accent) 0%, transparent 65%);
+    opacity: 1;
+  }
+
+  .parallax-orb--dark {
+    background: radial-gradient(circle at 30% 30%, var(--parallax-orb) 0%, transparent 68%);
+  }
+
+  .parallax-orb--a {
+    left: -8%;
+    top: -5%;
+    width: 28rem;
+    height: 28rem;
+  }
+
+  .parallax-orb--b {
+    right: -10%;
+    top: 22%;
+    width: 32rem;
+    height: 32rem;
+  }
+
+  .parallax-orb--c {
+    left: 20%;
+    bottom: -10%;
+    width: 22rem;
+    height: 22rem;
+  }
+
+  .parallax-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.7;
+  }
+
+  .dark .parallax-lines {
+    opacity: 0.55;
+  }
+
+  .parallax-vignette {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--parallax-vignette);
+  }
+
+  .parallax-line {
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--parallax-line), transparent);
+    transform: rotate(-4deg);
+  }
+
+  .preview-dock {
+    @apply flex flex-wrap items-center justify-center gap-1 rounded-full px-2 py-1.5 backdrop-blur-xl;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: var(--shadow-premium);
+  }
+
+  .preview-dock--lg {
+    @apply gap-1.5 px-3 py-2;
+  }
+}
