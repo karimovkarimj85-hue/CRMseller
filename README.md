@@ -33,11 +33,13 @@ npm run preview:pages
 
 ## Telegram (заявки в канал)
 
-Скопируйте `.env.example` → `.env` и укажите токен бота и ID канала.
+Старый токен из portfolio **не работает** — нужен новый:
 
-Для GitHub Pages добавьте в **Settings → Secrets and variables → Actions**:
+1. Telegram → @BotFather → `/newbot` или `/token` для существующего бота
+2. Скопируйте токен в `src/telegram.config.ts` → `telegramBotToken`
+3. Добавьте бота **администратором** в канал заявок (право «Публиковать сообщения»)
+4. `telegramChatId` — ID канала (сейчас `-1003692525683`)
 
-- `TELEGRAM_BOT_TOKEN`
-- `TELEGRAM_CHAT_ID` (например `-1003692525683`)
+Локально можно через `.env` (см. `.env.example`).
 
-Те же значения, что в репозитории `gaintech-portfolio`.
+Для GitHub Pages — **Secrets → Actions**: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (перекрывают config при сборке).

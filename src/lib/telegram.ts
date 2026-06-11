@@ -1,9 +1,10 @@
-// Те же credentials, что в gaintech-portfolio (env перекрывает при деплое через Secrets)
+import { telegramBotToken, telegramChatId } from '../telegram.config';
+
 const BOT_TOKEN =
   (import.meta.env.VITE_TELEGRAM_BOT_TOKEN as string | undefined)?.trim() ||
-  '8747555857:AAE1SP0bcIsEMaezmf-MunzDxiIozgmLFak';
+  telegramBotToken.trim();
 const CHAT_ID =
-  (import.meta.env.VITE_TELEGRAM_CHAT_ID as string | undefined)?.trim() || '-1003692525683';
+  (import.meta.env.VITE_TELEGRAM_CHAT_ID as string | undefined)?.trim() || telegramChatId.trim();
 
 export type TelegramLeadType = 'contact' | 'consultation' | 'demo';
 
@@ -16,7 +17,7 @@ export interface TelegramLeadData {
 }
 
 export function isTelegramConfigured(): boolean {
-  return Boolean(BOT_TOKEN?.trim() && CHAT_ID?.trim());
+  return Boolean(BOT_TOKEN && CHAT_ID);
 }
 
 export function tashkentNow(): string {
@@ -63,9 +64,25 @@ export function formatLeadMessage(type: TelegramLeadType, data: TelegramLeadData
   return lines.join('\n');
 }
 
+function mapTelegramError(description: string): string {
+  const lower = description.toLowerCase();
+  if (lower.includes('unauthorized')) {
+    return 'Токен бота недействен. Создайте новый в @BotFather и укажите в telegram.config.ts или Secrets.';
+  }
+  if (lower.includes('chat not found')) {
+    return 'Канал не найден. Проверьте ID канала и добавьте бота администратором.';
+  }
+  if (lower.includes('not enough rights') || lower.includes("can't post")) {
+    return 'Бот не может писать в канал. Дайте боту право «Публиковать сообщения».';
+  }
+  return description;
+}
+
 export async function sendTelegramMessage(text: string): Promise<void> {
   if (!isTelegramConfigured()) {
-    throw new Error('Telegram не настроен. Добавьте VITE_TELEGRAM_BOT_TOKEN и VITE_TELEGRAM_CHAT_ID.');
+    throw new Error(
+      'Telegram не настроен. Укажите токен в src/telegram.config.ts или переменных VITE_TELEGRAM_*.'
+    );
   }
 
   const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -80,7 +97,7 @@ export async function sendTelegramMessage(text: string): Promise<void> {
 
   const payload = (await response.json()) as { ok?: boolean; description?: string };
   if (!payload.ok) {
-    throw new Error(payload.description || 'Не удалось отправить сообщение в Telegram');
+    throw new Error(mapTelegramError(payload.description || 'Не удалось отправить сообщение в Telegram'));
   }
 }
 
