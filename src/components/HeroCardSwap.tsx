@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import CardSwap, { Card } from './CardSwap';
 import { heroCardsConfig } from '../config';
+import { assetUrl } from '../lib/assets';
 
 const facilityUrls = [
   '/',
@@ -37,7 +38,7 @@ export default function HeroCardSwap() {
               </div>
               <div className="relative min-h-0 flex-1">
                 <img
-                  src={panel.image}
+                  src={assetUrl(panel.image)}
                   alt={panel.label}
                   className="h-full w-full object-cover object-top"
                 />

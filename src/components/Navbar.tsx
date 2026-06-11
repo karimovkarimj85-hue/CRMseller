@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { navigationConfig } from '../config';
+import { assetUrl } from '../lib/assets';
 import ThemeToggle from './ThemeToggle';
 
 const MotionLink = motion.create(Link);
@@ -26,7 +27,7 @@ export default function Navbar() {
         <Link to="/" className="flex items-center gap-3">
           {navigationConfig.logoPath ? (
             <motion.img
-              src={navigationConfig.logoPath}
+              src={assetUrl(navigationConfig.logoPath)}
               alt={navigationConfig.brandName}
               className="h-8 w-auto max-w-[120px] object-contain object-left"
               whileHover={{ scale: 1.04 }}

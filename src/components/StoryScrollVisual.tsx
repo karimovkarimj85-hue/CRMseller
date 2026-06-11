@@ -1,5 +1,6 @@
 import { motion, useTransform, type MotionValue } from 'framer-motion';
 import type { ProductStoryScene } from '../config';
+import { assetUrl } from '../lib/assets';
 
 interface StoryScrollVisualProps {
   scenes: ProductStoryScene[];
@@ -43,7 +44,7 @@ function StorySceneLayer({
         style={{ y, scale, rotateX, rotateY, transformPerspective: 1400 }}
       >
         <img
-          src={scene.image}
+          src={assetUrl(scene.image)}
           alt={scene.title}
           className="story-shot-img--side"
           draggable={false}

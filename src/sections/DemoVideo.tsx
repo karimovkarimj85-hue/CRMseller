@@ -3,6 +3,7 @@ import { Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import ScreenshotStage from '../components/ScreenshotStage';
 import { demoConfig } from '../config';
+import { assetUrl } from '../lib/assets';
 
 export default function DemoVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -41,8 +42,8 @@ export default function DemoVideo() {
             <div className="relative">
               <video
                 ref={videoRef}
-                src={demoConfig.videoPath}
-                poster={demoConfig.poster}
+                src={assetUrl(demoConfig.videoPath)}
+                poster={assetUrl(demoConfig.poster)}
                 className="block w-full"
                 playsInline
                 controls={playing}

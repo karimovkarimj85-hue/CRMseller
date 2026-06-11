@@ -1,3 +1,4 @@
+import { assetUrl } from '../lib/assets';
 import ScreenshotStage from './ScreenshotStage';
 
 interface PanelFrameProps {
@@ -13,8 +14,8 @@ export default function PanelFrame({ src, alt = 'Gain CRM', video, className = '
     <ScreenshotStage className={className} glow="neutral">
       {video ? (
         <video
-          src={video}
-          poster={src}
+          src={assetUrl(video)}
+          poster={assetUrl(src)}
           autoPlay
           muted
           loop
@@ -23,7 +24,7 @@ export default function PanelFrame({ src, alt = 'Gain CRM', video, className = '
         />
       ) : (
         <img
-          src={src}
+          src={assetUrl(src)}
           alt={alt}
           className="block w-full h-auto"
           loading={priority ? 'eager' : 'lazy'}

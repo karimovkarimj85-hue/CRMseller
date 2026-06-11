@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { heroCardsConfig } from '../config';
+import { assetUrl } from '../lib/assets';
 import ScreenshotStage from './ScreenshotStage';
 
 interface HeroProductPreviewProps {
@@ -18,7 +19,7 @@ export default function HeroProductPreview({ large = false }: HeroProductPreview
           <AnimatePresence mode="wait">
             <motion.img
               key={panel.image}
-              src={panel.image}
+              src={assetUrl(panel.image)}
               alt={panel.label}
               className={`block w-full ${large ? 'min-h-[220px] sm:min-h-[280px]' : ''}`}
               initial={{ opacity: 0, scale: 0.98 }}

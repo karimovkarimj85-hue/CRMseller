@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { assetUrl } from '../lib/assets';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
   const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
@@ -38,7 +39,7 @@ const preloadImages = async (urls: string[]): Promise<void> => {
       src =>
         new Promise<void>(resolve => {
           const img = new Image();
-          img.src = src;
+          img.src = assetUrl(src);
           img.onload = img.onerror = () => resolve();
         })
     )
@@ -124,7 +125,7 @@ const Masonry: React.FC<MasonryProps> = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    preloadImages(items.map(i => assetUrl(i.img))).then(() => setImagesReady(true));
   }, [items]);
 
   const grid = useMemo<GridItem[]>(() => {
@@ -251,7 +252,7 @@ const Masonry: React.FC<MasonryProps> = ({
             className="panel-glow relative h-full w-full overflow-hidden rounded-glass border border-white/15 bg-black/40 shadow-glass"
           >
             <img
-              src={item.img}
+              src={assetUrl(item.img)}
               alt={item.label ?? ''}
               className="h-full w-full object-contain object-top bg-[#0a0a0a] p-1"
               loading="lazy"

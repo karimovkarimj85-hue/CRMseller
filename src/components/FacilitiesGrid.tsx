@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../lib/assets';
 import { facilitiesConfig } from '../config';
 import { fadeUp, staggerFast, cardHover } from '../lib/motion';
 
@@ -21,7 +22,7 @@ export default function FacilitiesGrid() {
             <Link to={`/facility/${f.slug}`} className="apple-product-tile group block overflow-hidden">
               <div className="facility-thumb relative aspect-[16/10] overflow-hidden border-b border-theme bg-[var(--screenshot-bg)]">
                 <img
-                  src={f.image}
+                  src={assetUrl(f.image)}
                   alt={f.name}
                   className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.04]"
                 />
