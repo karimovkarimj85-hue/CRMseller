@@ -330,7 +330,7 @@ export const contactConfig: ContactConfig = {
   description: "По запросам и вопросам — пишите в Telegram, звоните или отправьте email. Ответим в рабочее время.",
   channels: [
     { type: "phone", label: "Телефон", value: "+998 88 541 98 89", href: "tel:+998885419889" },
-    { type: "telegram", label: "Telegram", value: "@krm_kmb", href: "https://t.me/krm_kmb" },
+    { type: "telegram", label: "Telegram", value: "@gaintech_uz", href: "https://t.me/gaintech_uz" },
     { type: "email", label: "Email", value: "gaintech.uz@gmail.uz", href: "mailto:gaintech.uz@gmail.uz" },
     { type: "instagram", label: "Instagram", value: "gaintech.uz", href: "https://instagram.com/gaintech.uz" },
   ],
